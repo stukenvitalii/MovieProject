@@ -2,6 +2,8 @@ const API_KEY = "a636ae9f-df4c-4a8f-b2d1-f834fa42dc3b"
 const API_URL_POPULAR250 = 
     "https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_250_BEST_FILMS&page=1"
 
+const API_SEARCH = "https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword="
+
 getMovies(API_URL_POPULAR250);
 
 async function getMovies(url) {
@@ -30,6 +32,8 @@ function getClassByRating(rating) {
 function showMovies(data) {
     const moviesEl = document.querySelector(".movies");
 
+    document.querySelector(".movies").innerHTML = '';
+
     data.films.forEach(movie => {
         const movieEl = document.createElement("div");
         movieEl.classList.add(".movie");
@@ -50,6 +54,18 @@ function showMovies(data) {
     });
 }
 
+const form = document.querySelector("form");
+const search = document.querySelector(".header__search");
 
+form.addEventListener("submit", (e)=>{
+    e.preventDefault();
+
+    const apiSearchUrl = `${API_SEARCH}${search.value}`
+
+    if(search.value) {
+        getMovies(apiSearchUrl);
+        search.value = '';
+    };
+});
 
 
